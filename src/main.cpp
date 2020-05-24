@@ -12,6 +12,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "displayFunctions.h"
+#include "draw_images.h"
 
 // init display
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET, 1000000UL, 100000UL);
@@ -25,11 +26,8 @@ void setup()
     display.clearDisplay();
 }
 
-int disparr[SCREEN_WIDTH] = {0};
-
 void loop()
 {
     Serial.print("looping\n");
-    delay(1000);
-    testdrawroundrect();
+    draw_all_images(500);
 }

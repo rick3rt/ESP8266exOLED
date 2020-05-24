@@ -1,4 +1,5 @@
 #include "displayFunctions.h"
+#include "draw_images.h"
 
 // =============================================================================
 // Init display
