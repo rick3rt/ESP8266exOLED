@@ -11,23 +11,33 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <ESP8266TrueRandom.h>
 #include "displayFunctions.h"
 #include "draw_images.h"
 
 // init display
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET, 1000000UL, 100000UL);
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET, 4000000UL, 400000UL); // try extra 0?
+// array with function pointers
+extern mysize (*FunctionPointers[])(int, int);
 
 void setup()
 {
-    Serial.begin(115200);
+    // Serial.begin(115200);
     Wire.begin(2, 0); // start I2C
     InitDisplay();
-    delay(2000);
     display.clearDisplay();
 }
 
 void loop()
 {
-    Serial.print("looping\n");
-    draw_all_images(500);
+    // Serial.print("looping\n");
+    // display_all_images(500);
+
+    // scrollBitmap(1, draw_android);
+    // scrollBitmap(2, draw_android);
+    // scrollBitmap(3, draw_android);
+    // scrollBitmap(4, draw_android);
+    int dir = ESP8266TrueRandom.random(1, 9); //
+    int fun = ESP8266TrueRandom.random(0, NUM_POINTERS);
+    scrollBitmap(dir, FunctionPointers[fun]);
 }

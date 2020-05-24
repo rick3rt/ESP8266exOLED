@@ -48,7 +48,13 @@ static const unsigned char PROGMEM logo_bmp[] =
 // =============================================================================
 // void InitDisplay(byte addess = 0x3C);
 void InitDisplay();
-void DrawButtonStatus(byte button_status[], int size_grid);
+
+struct mysize
+{
+    int w, h;
+};
+
+void scrollBitmap(int dir, mysize (*funToDraw)(int x, int y));
 
 // -----------------------------------------------------------------------------
 // test draw functions

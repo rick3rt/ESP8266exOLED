@@ -15,52 +15,103 @@ void InitDisplay()
         Serial.println("SSD1306 allocation failed");
         Serial.println("Display gaat niet aan?");
     }
-
-    // fill buffer with custom logo
-    // if (DRAW_BOOT_LOGO)
-    // {
-    //     display.clearDisplay();
-    //     display.drawBitmap((128 - chip_width) / 2, (64 - chip_height) / 2,
-    //                        chip_data, chip_width, chip_height, 1);
-    //     // Show initial display buffer contents on the screen --
-    //     // the library initializes this with an Adafruit splash screen.
-    //     // display.invertDisplay(false);
-    // }
+    display.clearDisplay(); // hide adafruit boot...
     display.display();
-    // Clear the buffer
-    // display.clearDisplay();
 }
 
 // =============================================================================
 // My own draw functions
 // =============================================================================
-
-void DrawButtonStatus(byte grid[], int size_grid)
+void scrollBitmap(int dir, mysize (*funToDraw)(int x, int y))
 {
-    int boxw = 15;
-    int boxh = 15;
-    int linew = 2;
-    // draw the button status (x if on, nothing if off)
-    for (int k = 0; k < size_grid; k++)
+    // dir: 1 left      to      right
+    //      2 right     to      left
+    //      3 top       to      bottom
+    //      4 bottom    to      top
+
+    // first get size
+    mysize s = (*funToDraw)(0, 0);
+    int width = s.w;
+    int height = s.h;
+    int margin = 5;
+
+    // TODO: Diagonal movements offset of center
+    switch (dir)
     {
-        // determine on or off
-        // corners of rectangle
-        int x0 = linew * (k + 1) + boxw * k;
-        int y0 = linew;
-        int x1 = x0 + boxw;
-        int y1 = y0 + boxh;
-        display.fillCircle((x0 + x1) / 2, (y0 + y1) / 2, boxh / 3, grid[k]);
+    case 1:
+        // left to right
+        for (int x = -width - margin; x < SCREEN_WIDTH + margin; x++)
+        {
+            display.clearDisplay();
+            (*funToDraw)(x, (64 - height) / 2); // call the drawfunction
+            display.display();
+        }
+        break;
+    case 2:
+        // right to left
+        for (int x = SCREEN_WIDTH + margin; x > -width - margin; x--)
+        {
+            display.clearDisplay();
+            (*funToDraw)(x, (64 - height) / 2); // call the drawfunction
+            display.display();
+        }
+        break;
+    case 3:
+        // top to bottom
+        for (int y = -height - margin; y < SCREEN_HEIGHT + margin; y++)
+        {
+            display.clearDisplay();
+            (*funToDraw)((128 - width) / 2, y); // call the drawfunction
+            display.display();
+        }
+        break;
+    case 4:
+        // bottom to top
+        for (int y = SCREEN_HEIGHT + margin; y > -height - margin; y--)
+        {
+            display.clearDisplay();
+            (*funToDraw)((128 - width) / 2, y); // call the drawfunction
+            display.display();
+        }
+        break;
+    case 5:
+        // diagonal top left to bottom right
+        for (int x = -width - margin; x < SCREEN_WIDTH + margin; x++)
+        {
+            display.clearDisplay();
+            (*funToDraw)(x, x / 2); // call the drawfunction
+            display.display();
+        }
+    case 6:
+        // bottom right to top left
+        for (int x = SCREEN_WIDTH + margin; x > -width - margin; x--)
+        {
+            display.clearDisplay();
+            (*funToDraw)(x, x / 2); // call the drawfunction
+            display.display();
+        }
+        break;
+    case 7:
+        // bottom left to top right
+        for (int x = -width - margin; x < SCREEN_WIDTH + margin; x++)
+        {
+            display.clearDisplay();
+            (*funToDraw)(x, 64 - x / 2); // call the drawfunction
+            display.display();
+        }
+        break;
+    case 8:
+        // top right to bottom left
+        for (int x = SCREEN_WIDTH + margin; x > -width - margin; x--)
+        {
+            display.clearDisplay();
+            (*funToDraw)(x, 64 - x / 2); // call the drawfunction
+            display.display();
+        }
+        break;
+
+        break;
     }
-    // draw raster over other stuff
-    display.drawLine(0, 0, size_grid * linew + size_grid * boxw, 0, 1);
-    display.drawLine(0, boxh + linew * 2, size_grid * linew + size_grid * boxw, boxh + linew * 2, 1);
-    // draw vertical lines
-    for (int k = 0; k < size_grid + 1; k++)
-    {
-        display.drawLine(k * (linew + boxw), 0, k * (linew + boxw), boxh + 2 * linew, 1);
-    }
-    display.display();
-    // display.drawLine(x0, y0, x1, y1, on(1)/off(0));
 }
 
 // =============================================================================
