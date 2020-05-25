@@ -114,9 +114,273 @@ void scrollBitmap(int dir, mysize (*funToDraw)(int x, int y))
     }
 }
 
+/*
+display.setTextSize(1);              // Normal 1:1 pixel scale
+display.setTextColor(SSD1306_WHITE); // Draw white text
+display.setCursor(0, 0);             // Start at top-left corner
+display.println(F("Hello, world!"));
+
+display.setTextColor(SSD1306_BLACK, SSD1306_WHITE); // Draw 'inverse' text
+display.println(3.141592);
+
+display.setTextSize(2); // Draw 2X-scale text
+display.setTextColor(SSD1306_WHITE);
+display.print(F("0x"));
+display.println(0xDEADBEEF, HEX);
+*/
+
+String convertToString(const char *a, int size)
+{
+    int i;
+    String s = "";
+    for (i = 0; i < size; i++)
+    {
+        s = s + a[i];
+    }
+    return s;
+}
+
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void randomize(int arr[], int n)
+{
+    // Start from the last element and swap one by one. We don't
+    // need to run for the first element that's why i > 0
+    for (int i = n - 1; i > 0; i--)
+    {
+        long j = ESP8266TrueRandom.random(0, n);
+        swap(&arr[i], &arr[j]);
+    }
+}
+
+void copy_array(int s[], int d[], int n)
+{
+    for (int i = 0; i < n; i++)
+        d[i] = s[i];
+} // s for source & d for destination
+
+void animateNames(const char name_arr_og[][NUM_CHARS], const int name_inds_og[],
+                  const int num_names, char const postfix[] /* = "" */,
+                  int textSize /* = 1 */, int delayms /* = 100 */)
+{
+    // append somestring
+    char name_arr[NUM_NAMES][30];
+    for (int i = 0; i < NUM_NAMES; i++)
+    {
+        sprintf(name_arr[i], "%s%s", name_arr_og[i], postfix);
+    }
+
+    // set font size
+    display.setTextSize(textSize); // Normal 1:1 pixel scale
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0, 0); // Start at top-left corner
+
+    // FIRST shuffle name order
+    int name_inds[num_names];
+    for (int i = 0; i < num_names; i++)
+    {
+        name_inds[i] = name_inds_og[i];
+    }
+    randomize(name_inds, num_names);
+
+    // some data to use later
+    // int name_len[num_names];
+    int name_xpos[num_names];
+    uint16_t name_ht[num_names];
+    int inc_y = 1;   // value to increment cursor with each iteration
+    int delta_y = 1; // distance between text
+
+    // Initialize 'name' x positions
+    for (int i = 0; i < num_names; i++)
+    {
+        int in = name_inds[i];
+        int16_t x1, y1;
+        uint16_t wt, ht;
+        display.getTextBounds(name_arr[in], 0, 0, &x1, &y1, &wt, &ht);
+        name_xpos[i] = ESP8266TrueRandom.random(0, SCREEN_WIDTH - wt);
+        name_ht[i] = ht;
+    }
+
+    int name_y_pos_top[num_names];
+    int name_y_pos_bot[num_names];
+    name_y_pos_top[0] = -name_ht[0];
+    name_y_pos_bot[0] = 0;
+    // Initialize 'name' y positions
+    for (int i = 1; i < num_names; i++)
+    {
+        name_y_pos_top[i] = name_y_pos_top[i - 1] - delta_y - name_ht[i];
+        name_y_pos_bot[i] = name_y_pos_top[i] + name_ht[i];
+    }
+
+    // and now DRAW
+    bool drawing_something = false;
+    int num_iters = 0;
+    while (drawing_something || num_iters < 100)
+    {
+        // start drawing names, first clear display
+        display.clearDisplay();
+        drawing_something = false;
+        num_iters++;
+        for (int i = 0; i < num_names; i++)
+        {
+            int in = name_inds[i];
+            // check if in bounds
+            int ytop = name_y_pos_top[i];
+            int ybot = name_y_pos_bot[i];
+
+            if ((ytop > 0 && ytop < SCREEN_HEIGHT) || (ybot > 0 && ybot < SCREEN_HEIGHT))
+            {
+                drawing_something = true;
+                display.setCursor(name_xpos[i], ytop);
+                display.print(name_arr[in]);
+            }
+            // increment y positions
+            name_y_pos_top[i] += inc_y;
+            name_y_pos_bot[i] += inc_y;
+        }
+        if (drawing_something)
+        {
+            display.display();
+            delay(delayms); // and make bit slower
+        }
+    }
+}
+
+void whosNextAnimate()
+{
+    int margin = 10;
+    char text[] = "Who's next???";
+    // int16_t x1, y1;
+    // uint16_t wt, ht;
+    // display.getTextBounds(text, 0, 0, &x1, &y1, &wt, &ht);
+    int wt = SCREEN_WIDTH * 2.1;
+    display.setTextSize(3);
+    display.setTextColor(SSD1306_WHITE);
+    display.setTextWrap(false);
+
+    // init cursor
+    int cursor_x = SCREEN_WIDTH;
+    int cursor_y = 20;
+
+    // and draw text and graduated img
+    while (cursor_x > -wt - margin - graduated_width)
+    {
+        display.clearDisplay();
+        display.setCursor(cursor_x, cursor_y);
+        display.print(text);
+
+        if (cursor_x < SCREEN_WIDTH - wt + margin)
+        {
+            display.drawBitmap(cursor_x + wt + margin, (64 - graduated_height) / 2, graduated_data, graduated_width, graduated_height, 1);
+        }
+
+        display.display();
+        cursor_x -= 1;
+    }
+
+    display.setTextWrap(true); // and set wrapping on again
+    delay(100);
+    int r = ESP8266TrueRandom.random(0, 2);
+    if (r == 1)
+        animateNames(all_nicknames, whos_next_ind, NUM_NEXT_NAMES, "?", 2);
+    else
+        animateNames(all_names, whos_next_ind, NUM_NEXT_NAMES, "?", 2);
+
+    // draw question mark
+    display_quesstion2();
+    bool isInvert = false;
+    int i = 0;
+    do
+    {
+        delay(500);
+        isInvert = !isInvert;
+        display.invertDisplay(isInvert);
+        i++;
+    } while (i < 6);
+    display.invertDisplay(false);
+
+    // graduation bitmap
+    scrollBitmap(1, draw_graduated);
+    scrollBitmap(2, draw_graduated);
+
+    // draw heart
+    display_heart1();
+    isInvert = false;
+    i = 0;
+    do
+    {
+        delay(500);
+        isInvert = !isInvert;
+        display.invertDisplay(isInvert);
+        i++;
+    } while (i < 6);
+    display.invertDisplay(false);
+
+    // and names with hearts
+    animateNames(all_nicknames, all_ind, NUM_NAMES, "<3", 1);
+
+    // draw heart
+    display_heart1();
+    isInvert = false;
+    i = 0;
+    do
+    {
+        delay(500);
+        isInvert = !isInvert;
+        display.invertDisplay(isInvert);
+        i++;
+    } while (i < 6);
+    display.invertDisplay(false);
+}
+
+// array with function pointers (defined extern in draw_images.cpp)
+extern mysize (*ImgDrawPointers[])(int, int);
+extern void (*BlinkDrawPointers[])();
+extern void (*StickDrawPointers[])();
+
+// draw all images and animation categories random
+void AnimateAllStick()
+{
+    int ind_arr[NUM_STICK_POINTERS];
+    for (int i = 0; i < NUM_STICK_POINTERS; i++)
+    {
+        ind_arr[i] = i;
+    }
+    // shuffle array
+    randomize(ind_arr, NUM_STICK_POINTERS);
+    // and animate all
+    for (int i = 0; i < NUM_STICK_POINTERS; i++)
+    {
+        StickDrawPointers[ind_arr[i]]();
+    }
+}
+
+void AnimateAllBlink()
+{
+    int ind_arr[NUM_BLINK_POINTERS];
+    for (int i = 0; i < NUM_BLINK_POINTERS; i++)
+    {
+        ind_arr[i] = i;
+    }
+    // shuffle array
+    randomize(ind_arr, NUM_BLINK_POINTERS);
+    // and animate all
+    for (int i = 0; i < NUM_BLINK_POINTERS; i++)
+    {
+        BlinkDrawPointers[ind_arr[i]]();
+    }
+}
+
 // =============================================================================
 // test draw functions
 // =============================================================================
+/*
+
 
 // declare funtions
 void testdrawline()
@@ -446,3 +710,6 @@ void testanimate(const uint8_t *bitmap, uint8_t w, uint8_t h)
         }
     }
 }
+
+
+*/

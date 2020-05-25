@@ -3,7 +3,11 @@
 
 #include <Arduino.h>
 #include <Adafruit_GFX.h>
+
 #include <Adafruit_SSD1306.h>
+#include <Fonts/FreeSerifBoldItalic12pt7b.h>
+#include <ESP8266TrueRandom.h>
+#include "names.h"
 
 // Config for the SSD1306 screen
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
@@ -56,10 +60,21 @@ struct mysize
 
 void scrollBitmap(int dir, mysize (*funToDraw)(int x, int y));
 
+void animateNames(const char name_arr[][NUM_CHARS], const int name_inds_og[],
+                  const int num_names, char const postfix[] = "",
+                  int textSize = 1, int delayms = 20);
+void whosNextAnimate();
+void swap(int *a, int *b);
+void randomize(int arr[], int n);
+String convertToString(const char *a, int size);
+
+void AnimateAllBlink();
+void AnimateAllStick();
+
 // -----------------------------------------------------------------------------
 // test draw functions
 // -----------------------------------------------------------------------------
-
+/*
 void testdrawline();
 void testdrawrect(void);
 void testfillrect(void);
@@ -74,5 +89,6 @@ void testdrawstyles(void);
 void testscrolltext(void);
 void testdrawbitmap(void);
 void testanimate(const uint8_t *bitmap, uint8_t w, uint8_t h);
+*/
 
 #endif

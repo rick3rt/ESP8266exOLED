@@ -6,45 +6,54 @@
 #include <Arduino.h>
 #include "displayFunctions.h"
 // Include all data, contains size definitions and data
-#include "data\android.h"
-#include "data\android2.h"
-#include "data\bang.h"
-#include "data\boat.h"
-#include "data\boat2.h"
-#include "data\boat3.h"
-#include "data\broccoli.h"
-#include "data\broccoli2.h"
-#include "data\car.h"
-#include "data\cat_walking.h"
-#include "data\cat_walking2.h"
-#include "data\crosshair.h"
-#include "data\cyborg.h"
-#include "data\diode.h"
-#include "data\diode_led.h"
-#include "data\electric.h"
-#include "data\eye1.h"
-#include "data\eye2.h"
-#include "data\eye3.h"
-#include "data\fries.h"
-#include "data\gaming.h"
-#include "data\graduated.h"
-#include "data\icecream.h"
-#include "data\icecream2.h"
-#include "data\kano.h"
-#include "data\mouse.h"
-#include "data\nuke.h"
-#include "data\pink_pant.h"
-#include "data\rain.h"
-#include "data\rowing.h"
-#include "data\samsung.h"
-#include "data\shock.h"
-#include "data\speaker.h"
-#include "data\star.h"
-#include "data\target.h"
-#include "data\target2.h"
-#include "data\target3.h"
-#include "data\transistor.h"
-#include "data\tv.h"
+#include "data_img\android.h"
+#include "data_img\android2.h"
+#include "data_img\bang.h"
+#include "data_img\boat.h"
+#include "data_img\boat2.h"
+#include "data_img\boat3.h"
+#include "data_img\broccoli.h"
+#include "data_img\broccoli2.h"
+#include "data_img\car.h"
+#include "data_img\cat_walking.h"
+#include "data_img\cat_walking2.h"
+#include "data_img\crosshair.h"
+#include "data_img\cyborg.h"
+#include "data_img\diode.h"
+#include "data_img\diode_led.h"
+#include "data_img\electric.h"
+#include "data_img\eye1.h"
+#include "data_img\eye2.h"
+#include "data_img\eye3.h"
+#include "data_img\fries.h"
+#include "data_img\gaming.h"
+#include "data_img\graduated.h"
+#include "data_img\heart1.h"
+#include "data_img\heart2.h"
+#include "data_img\heart3.h"
+#include "data_img\heart4.h"
+#include "data_img\icecream.h"
+#include "data_img\icecream2.h"
+#include "data_img\illuminati1.h"
+#include "data_img\illuminati2.h"
+#include "data_img\kano.h"
+#include "data_img\love.h"
+#include "data_img\mouse.h"
+#include "data_img\nuke.h"
+#include "data_img\pink_pant.h"
+#include "data_img\quesstion2.h"
+#include "data_img\question1.h"
+#include "data_img\rain.h"
+#include "data_img\rowing.h"
+#include "data_img\samsung.h"
+#include "data_img\shock.h"
+#include "data_img\speaker.h"
+#include "data_img\star.h"
+#include "data_img\target.h"
+#include "data_img\target2.h"
+#include "data_img\target3.h"
+#include "data_img\transistor.h"
+#include "data_img\tv.h"
 
 
 // All functions to display the bitmaps
@@ -70,12 +79,21 @@ void display_eye3();
 void display_fries();
 void display_gaming();
 void display_graduated();
+void display_heart1();
+void display_heart2();
+void display_heart3();
+void display_heart4();
 void display_icecream();
 void display_icecream2();
+void display_illuminati1();
+void display_illuminati2();
 void display_kano();
+void display_love();
 void display_mouse();
 void display_nuke();
 void display_pink_pant();
+void display_quesstion2();
+void display_question1();
 void display_rain();
 void display_rowing();
 void display_samsung();
@@ -112,12 +130,21 @@ mysize draw_eye3(int x, int y);
 mysize draw_fries(int x, int y);
 mysize draw_gaming(int x, int y);
 mysize draw_graduated(int x, int y);
+mysize draw_heart1(int x, int y);
+mysize draw_heart2(int x, int y);
+mysize draw_heart3(int x, int y);
+mysize draw_heart4(int x, int y);
 mysize draw_icecream(int x, int y);
 mysize draw_icecream2(int x, int y);
+mysize draw_illuminati1(int x, int y);
+mysize draw_illuminati2(int x, int y);
 mysize draw_kano(int x, int y);
+mysize draw_love(int x, int y);
 mysize draw_mouse(int x, int y);
 mysize draw_nuke(int x, int y);
 mysize draw_pink_pant(int x, int y);
+mysize draw_quesstion2(int x, int y);
+mysize draw_question1(int x, int y);
 mysize draw_rain(int x, int y);
 mysize draw_rowing(int x, int y);
 mysize draw_samsung(int x, int y);
@@ -131,9 +158,57 @@ mysize draw_transistor(int x, int y);
 mysize draw_tv(int x, int y);
 
 
-#define NUM_POINTERS 39
+#define NUM_IMG_POINTERS 48
 
 void display_all_images(int delay_ms);
+
+
+// include animation data
+
+#include "data_anim\blink1.h"
+#include "data_anim\blink2.h"
+#include "data_anim\blink3.h"
+#include "data_anim\blink4.h"
+#include "data_anim\blink5.h"
+#include "data_anim\blink6.h"
+#include "data_anim\stickman10.h"
+#include "data_anim\stickman11.h"
+#include "data_anim\stickman13.h"
+#include "data_anim\stickman14.h"
+#include "data_anim\stickman15.h"
+#include "data_anim\stickman16.h"
+#include "data_anim\stickman17.h"
+#include "data_anim\stickman2.h"
+#include "data_anim\stickman4.h"
+#include "data_anim\stickman5.h"
+#include "data_anim\stickman6.h"
+#include "data_anim\stickman8.h"
+#include "data_anim\stickman9.h"
+
+
+void animate_blink1();
+void animate_blink2();
+void animate_blink3();
+void animate_blink4();
+void animate_blink5();
+void animate_blink6();
+void animate_stickman10();
+void animate_stickman11();
+void animate_stickman13();
+void animate_stickman14();
+void animate_stickman15();
+void animate_stickman16();
+void animate_stickman17();
+void animate_stickman2();
+void animate_stickman4();
+void animate_stickman5();
+void animate_stickman6();
+void animate_stickman8();
+void animate_stickman9();
+#define NUM_BLINK_POINTERS 6
+
+#define NUM_STICK_POINTERS 13
+
 
 #endif
 

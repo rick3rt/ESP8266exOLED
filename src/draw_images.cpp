@@ -157,6 +157,34 @@ void display_graduated()
     display.display();
 }
 
+void display_heart1()
+{
+    display.clearDisplay();
+    display.drawBitmap((128 - heart1_width) / 2, (64 - heart1_height) / 2, heart1_data, heart1_width, heart1_height, 1);
+    display.display();
+}
+
+void display_heart2()
+{
+    display.clearDisplay();
+    display.drawBitmap((128 - heart2_width) / 2, (64 - heart2_height) / 2, heart2_data, heart2_width, heart2_height, 1);
+    display.display();
+}
+
+void display_heart3()
+{
+    display.clearDisplay();
+    display.drawBitmap((128 - heart3_width) / 2, (64 - heart3_height) / 2, heart3_data, heart3_width, heart3_height, 1);
+    display.display();
+}
+
+void display_heart4()
+{
+    display.clearDisplay();
+    display.drawBitmap((128 - heart4_width) / 2, (64 - heart4_height) / 2, heart4_data, heart4_width, heart4_height, 1);
+    display.display();
+}
+
 void display_icecream()
 {
     display.clearDisplay();
@@ -171,10 +199,31 @@ void display_icecream2()
     display.display();
 }
 
+void display_illuminati1()
+{
+    display.clearDisplay();
+    display.drawBitmap((128 - illuminati1_width) / 2, (64 - illuminati1_height) / 2, illuminati1_data, illuminati1_width, illuminati1_height, 1);
+    display.display();
+}
+
+void display_illuminati2()
+{
+    display.clearDisplay();
+    display.drawBitmap((128 - illuminati2_width) / 2, (64 - illuminati2_height) / 2, illuminati2_data, illuminati2_width, illuminati2_height, 1);
+    display.display();
+}
+
 void display_kano()
 {
     display.clearDisplay();
     display.drawBitmap((128 - kano_width) / 2, (64 - kano_height) / 2, kano_data, kano_width, kano_height, 1);
+    display.display();
+}
+
+void display_love()
+{
+    display.clearDisplay();
+    display.drawBitmap((128 - love_width) / 2, (64 - love_height) / 2, love_data, love_width, love_height, 1);
     display.display();
 }
 
@@ -196,6 +245,20 @@ void display_pink_pant()
 {
     display.clearDisplay();
     display.drawBitmap((128 - pink_pant_width) / 2, (64 - pink_pant_height) / 2, pink_pant_data, pink_pant_width, pink_pant_height, 1);
+    display.display();
+}
+
+void display_quesstion2()
+{
+    display.clearDisplay();
+    display.drawBitmap((128 - quesstion2_width) / 2, (64 - quesstion2_height) / 2, quesstion2_data, quesstion2_width, quesstion2_height, 1);
+    display.display();
+}
+
+void display_question1()
+{
+    display.clearDisplay();
+    display.drawBitmap((128 - question1_width) / 2, (64 - question1_height) / 2, question1_data, question1_width, question1_height, 1);
     display.display();
 }
 
@@ -275,8 +338,6 @@ void display_tv()
     display.drawBitmap((128 - tv_width) / 2, (64 - tv_height) / 2, tv_data, tv_width, tv_height, 1);
     display.display();
 }
-
-
 
 // Functions to draw the bitmaps at x,y
 mysize draw_android(int x, int y)
@@ -411,6 +472,30 @@ mysize draw_graduated(int x, int y)
     return mysize{graduated_width, graduated_height};
 }
 
+mysize draw_heart1(int x, int y)
+{
+    display.drawBitmap(x, y, heart1_data, heart1_width, heart1_height, 1);
+    return mysize{heart1_width, heart1_height};
+}
+
+mysize draw_heart2(int x, int y)
+{
+    display.drawBitmap(x, y, heart2_data, heart2_width, heart2_height, 1);
+    return mysize{heart2_width, heart2_height};
+}
+
+mysize draw_heart3(int x, int y)
+{
+    display.drawBitmap(x, y, heart3_data, heart3_width, heart3_height, 1);
+    return mysize{heart3_width, heart3_height};
+}
+
+mysize draw_heart4(int x, int y)
+{
+    display.drawBitmap(x, y, heart4_data, heart4_width, heart4_height, 1);
+    return mysize{heart4_width, heart4_height};
+}
+
 mysize draw_icecream(int x, int y)
 {
     display.drawBitmap(x, y, icecream_data, icecream_width, icecream_height, 1);
@@ -423,10 +508,28 @@ mysize draw_icecream2(int x, int y)
     return mysize{icecream2_width, icecream2_height};
 }
 
+mysize draw_illuminati1(int x, int y)
+{
+    display.drawBitmap(x, y, illuminati1_data, illuminati1_width, illuminati1_height, 1);
+    return mysize{illuminati1_width, illuminati1_height};
+}
+
+mysize draw_illuminati2(int x, int y)
+{
+    display.drawBitmap(x, y, illuminati2_data, illuminati2_width, illuminati2_height, 1);
+    return mysize{illuminati2_width, illuminati2_height};
+}
+
 mysize draw_kano(int x, int y)
 {
     display.drawBitmap(x, y, kano_data, kano_width, kano_height, 1);
     return mysize{kano_width, kano_height};
+}
+
+mysize draw_love(int x, int y)
+{
+    display.drawBitmap(x, y, love_data, love_width, love_height, 1);
+    return mysize{love_width, love_height};
 }
 
 mysize draw_mouse(int x, int y)
@@ -445,6 +548,18 @@ mysize draw_pink_pant(int x, int y)
 {
     display.drawBitmap(x, y, pink_pant_data, pink_pant_width, pink_pant_height, 1);
     return mysize{pink_pant_width, pink_pant_height};
+}
+
+mysize draw_quesstion2(int x, int y)
+{
+    display.drawBitmap(x, y, quesstion2_data, quesstion2_width, quesstion2_height, 1);
+    return mysize{quesstion2_width, quesstion2_height};
+}
+
+mysize draw_question1(int x, int y)
+{
+    display.drawBitmap(x, y, question1_data, question1_width, question1_height, 1);
+    return mysize{question1_width, question1_height};
 }
 
 mysize draw_rain(int x, int y)
@@ -513,9 +628,7 @@ mysize draw_tv(int x, int y)
     return mysize{tv_width, tv_height};
 }
 
-
-
-mysize (*FunctionPointers[])(int, int) = {
+mysize (*ImgDrawPointers[])(int, int) = {
     draw_android,
     draw_android2,
     draw_bang,
@@ -538,12 +651,21 @@ mysize (*FunctionPointers[])(int, int) = {
     draw_fries,
     draw_gaming,
     draw_graduated,
+    draw_heart1,
+    draw_heart2,
+    draw_heart3,
+    draw_heart4,
     draw_icecream,
     draw_icecream2,
+    draw_illuminati1,
+    draw_illuminati2,
     draw_kano,
+    draw_love,
     draw_mouse,
     draw_nuke,
     draw_pink_pant,
+    draw_quesstion2,
+    draw_question1,
     draw_rain,
     draw_rowing,
     draw_samsung,
@@ -625,13 +747,34 @@ void display_all_images(int delay_ms)
     display_graduated();
     delay(delay_ms);
 
+    display_heart1();
+    delay(delay_ms);
+
+    display_heart2();
+    delay(delay_ms);
+
+    display_heart3();
+    delay(delay_ms);
+
+    display_heart4();
+    delay(delay_ms);
+
     display_icecream();
     delay(delay_ms);
 
     display_icecream2();
     delay(delay_ms);
 
+    display_illuminati1();
+    delay(delay_ms);
+
+    display_illuminati2();
+    delay(delay_ms);
+
     display_kano();
+    delay(delay_ms);
+
+    display_love();
     delay(delay_ms);
 
     display_mouse();
@@ -641,6 +784,12 @@ void display_all_images(int delay_ms)
     delay(delay_ms);
 
     display_pink_pant();
+    delay(delay_ms);
+
+    display_quesstion2();
+    delay(delay_ms);
+
+    display_question1();
     delay(delay_ms);
 
     display_rain();
@@ -675,6 +824,397 @@ void display_all_images(int delay_ms)
 
     display_tv();
     delay(delay_ms);
-
 }
 
+void animate_blink1()
+{
+    int num_iter = 0;
+    int num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < blink1_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - blink1_width) / 2, (64 - blink1_height) / 2, blink1_data[i], blink1_width, blink1_height, 1);
+            display.display();
+            if (i == 0)
+                delay(3000);
+            else
+                delay(50);
+        }
+    }
+}
+void animate_blink2()
+{
+    int num_iter = 0;
+    int num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < blink2_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - blink2_width) / 2, (64 - blink2_height) / 2, blink2_data[i], blink2_width, blink2_height, 1);
+            display.display();
+            if (i == 0)
+                delay(3000);
+            else
+                delay(50);
+        }
+    }
+}
+void animate_blink3()
+{
+    int num_iter = 0;
+    int num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < blink3_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - blink3_width) / 2, (64 - blink3_height) / 2, blink3_data[i], blink3_width, blink3_height, 1);
+            display.display();
+            if (i == 0)
+                delay(3000);
+            else
+                delay(50);
+        }
+    }
+}
+void animate_blink4()
+{
+    int num_iter = 0;
+    int num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < blink4_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - blink4_width) / 2, (64 - blink4_height) / 2, blink4_data[i], blink4_width, blink4_height, 1);
+            display.display();
+            if (i == 0)
+                delay(3000);
+            else
+                delay(50);
+        }
+    }
+}
+void animate_blink5()
+{
+    int num_iter = 0;
+    int num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < blink5_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - blink5_width) / 2, (64 - blink5_height) / 2, blink5_data[i], blink5_width, blink5_height, 1);
+            display.display();
+            if (i == 0)
+                delay(3000);
+            else
+                delay(50);
+        }
+    }
+}
+void animate_blink6()
+{
+    int num_iter = 0;
+    int num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < blink6_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - blink6_width) / 2, (64 - blink6_height) / 2, blink6_data[i], blink6_width, blink6_height, 1);
+            display.display();
+            if (i == 0)
+                delay(3000);
+            else
+                delay(50);
+        }
+    }
+}
+void animate_stickman10()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman10_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman10_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman10_width) / 2, (64 - stickman10_height) / 2, stickman10_data[i], stickman10_width, stickman10_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+void animate_stickman11()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman11_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman11_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman11_width) / 2, (64 - stickman11_height) / 2, stickman11_data[i], stickman11_width, stickman11_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+void animate_stickman13()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman13_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman13_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman13_width) / 2, (64 - stickman13_height) / 2, stickman13_data[i], stickman13_width, stickman13_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+void animate_stickman14()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman14_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman14_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman14_width) / 2, (64 - stickman14_height) / 2, stickman14_data[i], stickman14_width, stickman14_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+void animate_stickman15()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman15_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman15_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman15_width) / 2, (64 - stickman15_height) / 2, stickman15_data[i], stickman15_width, stickman15_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+void animate_stickman16()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman16_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman16_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman16_width) / 2, (64 - stickman16_height) / 2, stickman16_data[i], stickman16_width, stickman16_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+void animate_stickman17()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman17_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman17_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman17_width) / 2, (64 - stickman17_height) / 2, stickman17_data[i], stickman17_width, stickman17_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+void animate_stickman2()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman2_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman2_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman2_width) / 2, (64 - stickman2_height) / 2, stickman2_data[i], stickman2_width, stickman2_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+void animate_stickman4()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman4_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman4_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman4_width) / 2, (64 - stickman4_height) / 2, stickman4_data[i], stickman4_width, stickman4_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+void animate_stickman5()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman5_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman5_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman5_width) / 2, (64 - stickman5_height) / 2, stickman5_data[i], stickman5_width, stickman5_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+void animate_stickman6()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman6_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman6_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman6_width) / 2, (64 - stickman6_height) / 2, stickman6_data[i], stickman6_width, stickman6_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+void animate_stickman8()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman8_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman8_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman8_width) / 2, (64 - stickman8_height) / 2, stickman8_data[i], stickman8_width, stickman8_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+void animate_stickman9()
+{
+    int num_iter = 0;
+    int num_loops = 1;
+    if (stickman9_frames < 20)
+        num_loops = 5;
+
+    while (num_iter < num_loops)
+    {
+        num_iter++;
+        for (int i = 0; i < stickman9_frames; i++)
+        {
+            display.clearDisplay();
+            display.drawBitmap((128 - stickman9_width) / 2, (64 - stickman9_height) / 2, stickman9_data[i], stickman9_width, stickman9_height, 1);
+            display.display();
+            delay(50);
+        }
+    }
+}
+
+void (*BlinkDrawPointers[])() = {
+    animate_blink1,
+    animate_blink2,
+    animate_blink3,
+    animate_blink4,
+    animate_blink5,
+    animate_blink6,
+};
+
+void (*StickDrawPointers[])() = {
+    animate_stickman10,
+    animate_stickman11,
+    animate_stickman13,
+    animate_stickman14,
+    animate_stickman15,
+    animate_stickman16,
+    animate_stickman17,
+    animate_stickman2,
+    animate_stickman4,
+    animate_stickman5,
+    animate_stickman6,
+    animate_stickman8,
+    animate_stickman9,
+};

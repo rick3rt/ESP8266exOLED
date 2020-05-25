@@ -1,10 +1,17 @@
 import os
 
 # list files in data_out folder
-FOLDER = 'data_out'
+FOLDER = 'data_img'
+FOLDER_ANIM = 'data_anim'
 FILE_NAME = "draw_images"
-files = [os.path.splitext(f)[0] for f in os.listdir(FOLDER) if os.path.isfile(
-    os.path.join(FOLDER, f)) and os.path.splitext(f)[1] == ".h"]
+USE_ANIMATION = True
+
+files = [os.path.splitext(f)[0] for f in os.listdir("../include/" + FOLDER) if os.path.isfile(
+    os.path.join("../include/" + FOLDER, f)) and os.path.splitext(f)[1] == ".h"]
+
+files_anim = [os.path.splitext(f)[0] for f in os.listdir('../include/' + FOLDER_ANIM) if os.path.isfile(
+    os.path.join('../include/' + FOLDER_ANIM, f)) and os.path.splitext(f)[1] == ".h"]
+
 
 # Define {t}, corresponds to tab (spaces or \t)
 mytab = "    "
@@ -24,7 +31,7 @@ source_file += "#include \"{fn}.h\"".format(fn=FILE_NAME)
 
 # include all headers
 for f in files:
-    header_file += "#include \"data\\{hfile}.h\"\n".format(hfile=f)
+    header_file += "#include \"{data_folder}\\{hfile}.h\"\n".format(data_folder=FOLDER, hfile=f)
 
 source_file += "\n\n// All functions to display the bitmaps\n"
 header_file += "\n\n// All functions to display the bitmaps\n"
@@ -67,8 +74,8 @@ source_file += "\n\n"
 #     draw_samsung,
 #     draw_shock,
 # };
-header_file += "#define NUM_POINTERS {num}\n\n".format(num=len(files))
-source_file += "mysize (*FunctionPointers[])(int, int) = {\n"
+header_file += "#define NUM_IMG_POINTERS {num}\n\n".format(num=len(files))
+source_file += "mysize (*ImgDrawPointers[])(int, int) = {\n"
 for f in files:
     source_file += "{t}draw_{img},\n".format(img=f, t=mytab)
 source_file += "};\n\n"
@@ -87,16 +94,110 @@ for f in files:
                     .format(img=f, t=mytab))
 source_file += "}\n"
 
-# print("====================")
-# print(source_file)
-# print("====================")
+# and stuff for animations
+
+if USE_ANIMATION:
+    header_file += "\n\n// include animation data\n\n"
+    for f in files_anim:
+        header_file += "#include \"{data_folder}\\{hfile}.h\"\n".format(
+            data_folder=FOLDER_ANIM, hfile=f)
+
+    header_file += "\n\n"
+    source_file += "\n\n"
+
+    for f in (f for f in files_anim if "blink" in f):
+        header_file += "void animate_{img}();\n".format(img=f)
+
+        source_file += ("void animate_{img}()\n"
+                        "{{\n"
+                        "{t}int num_iter = 0;\n"
+                        "{t}int num_loops = 5;\n"
+                        "{t}\n"
+                        "{t}while (num_iter < num_loops)\n"
+                        "{t}{{\n"
+                        "{t}{t}num_iter++;\n"
+                        "{t}{t}for (int i = 0; i < {img}_frames; i++)\n"
+                        "{t}{t}{{\n"
+                        "{t}{t}{t}display.clearDisplay();\n"
+                        "{t}{t}{t}display.drawBitmap((128 - {img}_width) / 2, (64 - {img}_height) / 2, {img}_data[i], {img}_width, {img}_height, 1);\n"
+                        "{t}{t}{t}display.display();\n"
+                        "{t}{t}{t}if (i == 0)\n"
+                        "{t}{t}{t}{t}delay(3000);\n"
+                        "{t}{t}{t}else\n"
+                        "{t}{t}{t}{t}delay(50);\n"
+                        "{t}{t}}}\n"
+                        "{t}}}\n"
+                        "}}\n".format(img=f, t=mytab))
+
+    for f in (f for f in files_anim if "stick" in f):
+        header_file += "void animate_{img}();\n".format(img=f)
+
+        source_file += ("void animate_{img}()\n"
+                        "{{\n"
+                        "{t}int num_iter = 0;\n"
+                        "{t}int num_loops = 1;\n"
+                        "{t}if ({img}_frames < 20)\n"
+                        "{t}{t}num_loops = 5;\n"
+                        "{t}{t}\n"
+                        "{t}while (num_iter < num_loops)\n"
+                        "{t}{{\n"
+                        "{t}{t}num_iter++;\n"
+                        "{t}{t}for (int i = 0; i < {img}_frames; i++)\n"
+                        "{t}{t}{{\n"
+                        "{t}{t}{t}display.clearDisplay();\n"
+                        "{t}{t}{t}display.drawBitmap((128 - {img}_width) / 2, (64 - {img}_height) / 2, {img}_data[i], {img}_width, {img}_height, 1);\n"
+                        "{t}{t}{t}display.display();\n"
+                        "{t}{t}{t}delay(50);\n"
+                        "{t}{t}}}\n"
+                        "{t}}}\n"
+                        "}}\n".format(img=f, t=mytab))
+
+    num_stick = 0
+    num_blink = 0
+    source_file += "\nvoid (*BlinkDrawPointers[])() = {\n"
+    for f in (f for f in files_anim if "blink" in f):
+        source_file += "{t}animate_{img},\n".format(img=f, t=mytab)
+        num_blink += 1
+    source_file += "};\n\n"
+
+    source_file += "\nvoid (*StickDrawPointers[])() = {\n"
+    for f in (f for f in files_anim if "stick" in f):
+        source_file += "{t}animate_{img},\n".format(img=f, t=mytab)
+        num_stick += 1
+
+    source_file += "};\n\n"
+
+    header_file += "#define NUM_BLINK_POINTERS {num}\n\n".format(num=num_blink)
+    header_file += "#define NUM_STICK_POINTERS {num}\n\n".format(num=num_stick)
+
+
+# void animate_blink5()
+# {
+#     for (int i = 0; i < blink5_frames; i++)
+#     {
+#         display.clearDisplay();
+#         display.drawBitmap((128 - blink5_width) / 2, (64 - blink5_height) / 2, blink5_data[i], blink5_width, blink5_height, 1);
+#         display.display();
+#         if (i == 0)
+#         {
+#             delay(5000);
+#         }
+#         else
+#         {
+#             delay(10);
+#         }
+#     }
+# }
+
 
 # endif in header
 header_file += "\n#endif\n"
 
 
 # write to file
-f_header = open(FILE_NAME + ".h", "w")
-f_source = open(FILE_NAME + ".cpp", "w")
+f_header = open("../include/" + FILE_NAME + ".h", "w")
+f_source = open("../src/" + FILE_NAME + ".cpp", "w")
 print(source_file, file=f_source)
 print(header_file, file=f_header)
+
+print("source and header files written!")

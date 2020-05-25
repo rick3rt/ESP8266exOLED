@@ -5,3 +5,7 @@
 .vscode/ipch
 script/img
 script/img_out
+script/anim
+script/anim_out
+
+include/names.h

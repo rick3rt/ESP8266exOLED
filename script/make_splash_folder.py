@@ -13,7 +13,7 @@ screen_height = 64
 
 def main(fn, id, threshold, file=None, ext=".jpg"):
     if file:
-        f = open(os.path.join('data_out', file + ".h"), "w")
+        f = open(os.path.join('../include/data_img', file + ".h"), "w")
         printto = f
         # and also save thumbnail of jpg
     else:
