@@ -36,9 +36,9 @@ void loop()
 {
     display.clearDisplay();
 
-    AnimateAllStick();
-    AnimateAllBlink();
-    whosNextAnimate();
+    // AnimateAllStick();
+    // AnimateAllBlink();
+    // whosNextAnimate();
 
     // generate some random numbers to see what to do
     int whatToDo = ESP8266TrueRandom.random(0, 7);
