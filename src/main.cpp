@@ -4,6 +4,7 @@
  * Then reboot without GPIO2 HIGH and GPIO0 LOW, to start run mode
  * Always have CH_PD HIGH
  * 
+ * Connect GPIO0 to SCL and GPIO2 SDA. 
  * 
  */
 
@@ -27,7 +28,7 @@ extern void (*StickDrawPointers[])();
 void setup()
 {
     Serial.begin(115200);
-    Wire.begin(2, 0); // start I2C
+    Wire.begin(2, 0); // start I2C, Wire.begin(int sda, int scl)
     InitDisplay();
     display.clearDisplay();
 }
